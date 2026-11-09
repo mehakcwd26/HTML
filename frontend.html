@@ -1,0 +1,397 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DeepFake Detection AI</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #071426;
+    color: white;
+}
+
+header {
+    background: #0c203b;
+    padding: 20px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    border-bottom: 1px solid #25466b;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #36d5ff;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+nav a:hover {
+    color: #36d5ff;
+}
+
+.hero {
+    text-align: center;
+    padding: 75px 20px 45px;
+}
+
+.hero h1 {
+    font-size: 42px;
+    margin-bottom: 20px;
+}
+
+.hero h1 span {
+    color: #36d5ff;
+}
+
+.hero p {
+    color: #b7c8dc;
+    max-width: 650px;
+    margin: auto;
+    line-height: 1.7;
+}
+
+.upload-box {
+    background: #102744;
+    border: 2px dashed #36d5ff;
+    border-radius: 15px;
+    max-width: 650px;
+    margin: 30px auto;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.upload-icon {
+    font-size: 55px;
+    margin-bottom: 15px;
+}
+
+.upload-box h2 {
+    margin-bottom: 12px;
+}
+
+.upload-box p {
+    color: #b7c8dc;
+    margin-bottom: 20px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.upload-btn, .detect-btn {
+    display: inline-block;
+    background: #08b9e8;
+    color: #061426;
+    padding: 13px 25px;
+    border: none;
+    border-radius: 7px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 8px;
+}
+
+.upload-btn:hover, .detect-btn:hover {
+    background: #65e2ff;
+}
+
+#fileName {
+    margin-top: 18px;
+    color: #36d5ff;
+    overflow-wrap: anywhere;
+}
+
+#preview {
+    display: none;
+    max-width: 90%;
+    max-height: 250px;
+    margin: 20px auto;
+    border-radius: 10px;
+}
+
+.result-box {
+    display: none;
+    background: #102744;
+    border-radius: 12px;
+    padding: 25px;
+    max-width: 650px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.result-box h2 {
+    color: #36d5ff;
+    margin-bottom: 15px;
+}
+
+#resultText {
+    font-size: 22px;
+    margin: 15px;
+}
+
+#resultDetails {
+    color: #b7c8dc;
+    line-height: 1.6;
+}
+
+.info {
+    padding: 55px 8%;
+    text-align: center;
+}
+
+.info h2 {
+    color: #36d5ff;
+    margin-bottom: 25px;
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.card {
+    background: #102744;
+    padding: 25px;
+    border-radius: 12px;
+    width: 260px;
+    line-height: 1.6;
+}
+
+.card h3 {
+    color: #36d5ff;
+    margin-bottom: 12px;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    background: #0c203b;
+    color: #a9bfd5;
+    margin-top: 30px;
+}
+
+.status {
+    color: #ffc76b;
+    font-size: 14px;
+    margin-top: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">DeepFake AI</div>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#detect">Detect</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<section class="hero" id="home">
+    <h1>AI-Based <span>Deepfake Detection</span></h1>
+    <p>
+        Detect manipulated images and videos using Artificial
+        Intelligence. Upload your media and connect it to our
+        trained AI detection model for analysis.
+    </p>
+</section>
+
+<section id="detect">
+    <div class="upload-box">
+        <div class="upload-icon">🔍</div>
+        <h2>Upload Image or Video</h2>
+        <p>Select an image or video from your device.</p>
+
+        <label for="mediaFile" class="upload-btn">
+            Choose File
+        </label>
+
+        <input type="file" id="mediaFile"
+        accept="image/*,video/mp4,video/webm,video/quicktime">
+
+        <p id="fileName">No file selected</p>
+
+        <img id="preview" alt="Selected image preview">
+
+        <video id="videoPreview" controls
+        style="display:none;max-width:90%;max-height:250px;margin:20px auto;border-radius:10px;">
+        </video>
+
+        <br>
+
+        <button class="detect-btn" id="detectBtn">
+            Detect Deepfake
+        </button>
+
+        <p class="status" id="status">
+            AI model connection required for real detection.
+        </p>
+    </div>
+
+    <div class="result-box" id="resultBox">
+        <h2>Detection Result</h2>
+        <div id="resultText"></div>
+        <p id="resultDetails"></p>
+    </div>
+</section>
+
+<section class="info" id="about">
+    <h2>About Deepfake Detection</h2>
+    <div class="cards">
+        <div class="card">
+            <h3>What is Deepfake?</h3>
+            <p>
+                Deepfake is AI-generated or manipulated
+                image, audio or video content that can
+                make someone appear to say or do things
+                they did not.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>How It Works</h3>
+            <p>
+                An AI model analyzes the uploaded media
+                and identifies patterns that may indicate
+                manipulation.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Why Detection?</h3>
+            <p>
+                It helps people evaluate digital content
+                and improves awareness about manipulated
+                media and misinformation.
+            </p>
+        </div>
+    </div>
+</section>
+
+<footer id="contact">
+    <p>DeepFake AI Detection Project | B.Tech College Project</p>
+    <p>Powered by Artificial Intelligence and Machine Learning</p>
+</footer>
+
+<script>
+const fileInput = document.getElementById("mediaFile");
+const fileName = document.getElementById("fileName");
+const preview = document.getElementById("preview");
+const videoPreview = document.getElementById("videoPreview");
+const detectBtn = document.getElementById("detectBtn");
+const resultBox = document.getElementById("resultBox");
+const resultText = document.getElementById("resultText");
+const resultDetails = document.getElementById("resultDetails");
+const statusText = document.getElementById("status");
+
+let selectedFile = null;
+let previewURL = null;
+
+fileInput.addEventListener("change", function() {
+    selectedFile = this.files[0];
+
+    resultBox.style.display = "none";
+    preview.style.display = "none";
+    videoPreview.style.display = "none";
+
+    if (previewURL) URL.revokeObjectURL(previewURL);
+
+    if (!selectedFile) {
+        fileName.textContent = "No file selected";
+        return;
+    }
+
+    const allowed = selectedFile.type.startsWith("image/") ||
+                    selectedFile.type.startsWith("video/");
+
+    if (!allowed) {
+        alert("Please select a valid image or video.");
+        this.value = "";
+        selectedFile = null;
+        fileName.textContent = "No file selected";
+        return;
+    }
+
+    fileName.textContent = "Selected: " + selectedFile.name;
+    previewURL = URL.createObjectURL(selectedFile);
+
+    if (selectedFile.type.startsWith("image/")) {
+        preview.src = previewURL;
+        preview.style.display = "block";
+    } else {
+        videoPreview.src = previewURL;
+        videoPreview.style.display = "block";
+    }
+
+    statusText.textContent = "File selected. Ready for analysis.";
+});
+
+detectBtn.addEventListener("click", async function() {
+    if (!selectedFile) {
+        alert("Please upload an image or video first.");
+        return;
+    }
+
+    detectBtn.disabled = true;
+    detectBtn.textContent = "Analyzing...";
+    statusText.textContent = "Sending media to AI backend...";
+
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+
+    try {
+        const response = await fetch("/predict", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || "Detection failed.");
+        }
+
+        resultBox.style.display = "block";
+        resultText.textContent = data.prediction;
+        resultDetails.textContent =
+            "Confidence: " + data.confidence + "% | " +
+            (data.message || "AI analysis completed.");
+
+        statusText.textContent = "Analysis completed.";
+
+    } catch (error) {
+        resultBox.style.display = "block";
+        resultText.textContent = "Detection unavailable";
+        resultDetails.textContent = error.message;
+        statusText.textContent =
+            "Please check that the Python backend and trained model are running.";
+    } finally {
+        detectBtn.disabled = false;
+        detectBtn.textContent = "Detect Deepfake";
+    }
+});
+</script>
+
+</body>
+</html>
