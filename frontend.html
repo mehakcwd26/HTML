@@ -4,194 +4,409 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DeepFake Detection AI</title>
+<title>DeepShield AI - Deepfake Detection</title>
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --bg:#080e1c;
+    --panel:#121e33;
+    --cyan:#35d9ff;
+    --purple:#9d7bff;
+    --text:#f5f7ff;
+    --muted:#a1aec3;
+    --border:rgba(255,255,255,.09);
 }
 
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter,Arial,sans-serif;
+}
+
+html {scroll-behavior:smooth;}
+
 body {
-    background: #071426;
-    color: white;
+    background:var(--bg);
+    color:var(--text);
 }
 
 header {
-    background: #0c203b;
-    padding: 20px 7%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    border-bottom: 1px solid #25466b;
+    position:sticky;
+    top:0;
+    z-index:100;
+    padding:18px 7%;
+    background:#0d1729;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 }
 
 .logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: #36d5ff;
+    font-size:23px;
+    font-weight:800;
+}
+
+.logo span {color:var(--cyan);}
+
+nav {
+    display:flex;
+    flex-wrap:wrap;
+    gap:20px;
 }
 
 nav a {
-    color: white;
-    text-decoration: none;
-    margin-left: 20px;
+    text-decoration:none;
+    color:var(--muted);
+    font-size:12px;
+    font-weight:600;
 }
 
-nav a:hover {
-    color: #36d5ff;
-}
+nav a:hover {color:var(--cyan);}
 
 .hero {
-    text-align: center;
-    padding: 75px 20px 45px;
+    text-align:center;
+    padding:85px 20px 70px;
+    background:radial-gradient(ellipse at top,rgba(53,140,255,.2),transparent 65%);
+}
+
+.tag {
+    display:inline-block;
+    padding:8px 15px;
+    border:1px solid rgba(53,217,255,.3);
+    border-radius:30px;
+    color:var(--cyan);
+    font-size:10px;
+    letter-spacing:2px;
+    margin-bottom:22px;
 }
 
 .hero h1 {
-    font-size: 42px;
-    margin-bottom: 20px;
+    font-size:clamp(35px,6vw,60px);
+    line-height:1.15;
+    margin-bottom:18px;
 }
 
-.hero h1 span {
-    color: #36d5ff;
+.gradient {
+    background:linear-gradient(90deg,var(--cyan),var(--purple));
+    color:transparent;
+    background-clip:text;
+    -webkit-background-clip:text;
 }
 
 .hero p {
-    color: #b7c8dc;
-    max-width: 650px;
-    margin: auto;
-    line-height: 1.7;
+    max-width:680px;
+    margin:auto;
+    color:var(--muted);
+    line-height:1.9;
+    font-size:14px;
 }
 
-.upload-box {
-    background: #102744;
-    border: 2px dashed #36d5ff;
-    border-radius: 15px;
-    max-width: 650px;
-    margin: 30px auto;
-    padding: 40px 20px;
-    text-align: center;
+.btn {
+    display:inline-block;
+    padding:13px 23px;
+    border:0;
+    border-radius:9px;
+    cursor:pointer;
+    font-size:12px;
+    font-weight:700;
+    transition:.2s;
 }
 
-.upload-icon {
-    font-size: 55px;
-    margin-bottom: 15px;
+.btn-primary {
+    background:linear-gradient(100deg,var(--cyan),var(--purple));
+    color:#07101d;
 }
 
-.upload-box h2 {
-    margin-bottom: 12px;
+.btn-secondary {
+    background:#25334b;
+    color:white;
+    border:1px solid var(--border);
 }
 
-.upload-box p {
-    color: #b7c8dc;
-    margin-bottom: 20px;
+.btn:hover {transform:translateY(-3px);}
+
+.btn:disabled {
+    opacity:.5;
+    cursor:not-allowed;
+    transform:none;
 }
 
-input[type="file"] {
-    display: none;
+.hero .btn {margin-top:25px;}
+
+.container {
+    max-width:1100px;
+    padding:35px 22px 75px;
+    margin:auto;
 }
 
-.upload-btn, .detect-btn {
-    display: inline-block;
-    background: #08b9e8;
-    color: #061426;
-    padding: 13px 25px;
-    border: none;
-    border-radius: 7px;
-    font-weight: bold;
-    cursor: pointer;
-    margin: 8px;
+.section {
+    margin-top:65px;
+    scroll-margin-top:90px;
 }
 
-.upload-btn:hover, .detect-btn:hover {
-    background: #65e2ff;
+.section-heading {
+    text-align:center;
+    margin-bottom:30px;
 }
 
-#fileName {
-    margin-top: 18px;
-    color: #36d5ff;
-    overflow-wrap: anywhere;
+.section-heading h2 {
+    font-size:clamp(24px,4vw,34px);
+    margin-bottom:12px;
 }
 
-#preview {
-    display: none;
-    max-width: 90%;
-    max-height: 250px;
-    margin: 20px auto;
-    border-radius: 10px;
+.section-heading h2 span {color:var(--cyan);}
+
+.section-heading p {
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.8;
 }
 
-.result-box {
-    display: none;
-    background: #102744;
-    border-radius: 12px;
-    padding: 25px;
-    max-width: 650px;
-    margin: 20px auto;
-    text-align: center;
-}
-
-.result-box h2 {
-    color: #36d5ff;
-    margin-bottom: 15px;
-}
-
-#resultText {
-    font-size: 22px;
-    margin: 15px;
-}
-
-#resultDetails {
-    color: #b7c8dc;
-    line-height: 1.6;
-}
-
-.info {
-    padding: 55px 8%;
-    text-align: center;
-}
-
-.info h2 {
-    color: #36d5ff;
-    margin-bottom: 25px;
-}
-
-.cards {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
+.about-grid {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:17px;
 }
 
 .card {
-    background: #102744;
-    padding: 25px;
-    border-radius: 12px;
-    width: 260px;
-    line-height: 1.6;
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:25px;
+    transition:.3s;
+}
+
+.card:hover {
+    transform:translateY(-5px);
+    border-color:var(--cyan);
+}
+
+.card-icon {
+    font-size:30px;
+    margin-bottom:16px;
 }
 
 .card h3 {
-    color: #36d5ff;
-    margin-bottom: 12px;
+    color:var(--cyan);
+    font-size:15px;
+    margin-bottom:12px;
 }
 
-footer {
-    text-align: center;
-    padding: 25px;
-    background: #0c203b;
-    color: #a9bfd5;
-    margin-top: 30px;
+.card p {
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.9;
+}
+
+.upload-panel {
+    background:linear-gradient(145deg,#14233d,#101a2d);
+    border:1px solid var(--border);
+    padding:27px;
+    border-radius:18px;
+}
+
+.dropzone {
+    border:2px dashed rgba(53,217,255,.4);
+    padding:42px 15px;
+    border-radius:15px;
+    text-align:center;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.dropzone:hover,.dropzone.dragover {
+    background:rgba(53,217,255,.08);
+    border-color:var(--cyan);
+}
+
+.upload-icon {
+    width:65px;
+    height:65px;
+    display:grid;
+    place-items:center;
+    background:rgba(53,217,255,.1);
+    color:var(--cyan);
+    border-radius:18px;
+    margin:0 auto 18px;
+    font-size:30px;
+}
+
+.dropzone h3 {margin-bottom:10px;}
+
+.dropzone p {
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.8;
+}
+
+.browse {
+    display:block;
+    color:var(--cyan);
+    font-size:13px;
+    font-weight:700;
+    margin-top:12px;
+}
+
+#fileInput {display:none;}
+
+.preview-area {
+    display:none;
+    text-align:center;
+    margin-top:25px;
+}
+
+.preview-area img,.preview-area video {
+    max-width:100%;
+    max-height:330px;
+    border-radius:12px;
+}
+
+#videoPreview {display:none;}
+
+.file-name {
+    color:var(--muted);
+    font-size:12px;
+    margin-top:12px;
+    overflow-wrap:anywhere;
+}
+
+.actions {
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:22px;
 }
 
 .status {
-    color: #ffc76b;
-    font-size: 14px;
-    margin-top: 12px;
+    display:none;
+    margin-top:20px;
+    padding:17px;
+    border-radius:10px;
+    background:rgba(53,217,255,.07);
+    border:1px solid rgba(53,217,255,.2);
+    font-size:12px;
+    line-height:1.8;
+    overflow-wrap:anywhere;
+}
+
+.scan-line {
+    display:none;
+    height:3px;
+    margin-top:16px;
+    background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+    animation:scan 1.2s linear infinite;
+}
+
+@keyframes scan {
+    from {transform:translateX(-50%);}
+    to {transform:translateX(50%);}
+}
+
+.steps-box {
+    background:var(--panel);
+    border:1px solid var(--border);
+    padding:30px;
+    border-radius:17px;
+}
+
+.steps {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+}
+
+.step {
+    padding:18px;
+    background:#1a2a45;
+    border-radius:12px;
+}
+
+.step-number {
+    color:var(--cyan);
+    font-size:20px;
+    font-weight:800;
+    margin-bottom:13px;
+}
+
+.step h3 {
+    font-size:13px;
+    margin-bottom:9px;
+}
+
+.step p {
+    color:var(--muted);
+    font-size:11px;
+    line-height:1.8;
+}
+
+.objectives {
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:13px;
+}
+
+.objective {
+    padding:17px;
+    border-radius:10px;
+    background:var(--panel);
+    border:1px solid var(--border);
+    font-size:12px;
+}
+
+.objective span {
+    color:var(--cyan);
+    margin-right:8px;
+}
+
+.history-item {
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    padding:15px;
+    margin-top:10px;
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:10px;
+    font-size:11px;
+}
+
+.history-item span {overflow-wrap:anywhere;}
+
+.history-empty {
+    background:var(--panel);
+    padding:20px;
+    color:var(--muted);
+    border-radius:10px;
+    font-size:12px;
+}
+
+footer {
+    text-align:center;
+    padding:30px 15px;
+    border-top:1px solid var(--border);
+    color:var(--muted);
+    font-size:11px;
+    line-height:2;
+}
+
+@media(max-width:750px) {
+    header {
+        flex-direction:column;
+        gap:15px;
+    }
+    nav {justify-content:center;}
+    .about-grid {grid-template-columns:1fr;}
+    .steps {grid-template-columns:repeat(2,1fr);}
+}
+
+@media(max-width:450px) {
+    .steps,.objectives {grid-template-columns:1fr;}
+    .upload-panel {padding:15px;}
 }
 </style>
 </head>
@@ -199,198 +414,459 @@ footer {
 <body>
 
 <header>
-    <div class="logo">DeepFake AI</div>
+    <div class="logo">◈ DeepShield <span>AI</span></div>
+
     <nav>
         <a href="#home">Home</a>
-        <a href="#detect">Detect</a>
         <a href="#about">About</a>
-        <a href="#contact">Contact</a>
+        <a href="#detect">Detection</a>
+        <a href="#working">How It Works</a>
+        <a href="#objectives">Objectives</a>
     </nav>
 </header>
 
+<!-- HOME -->
+
 <section class="hero" id="home">
-    <h1>AI-Based <span>Deepfake Detection</span></h1>
+    <div class="tag">ARTIFICIAL INTELLIGENCE PROJECT</div>
+
+    <h1>
+        Detect the Truth.<br>
+        <span class="gradient">Trust the Media.</span>
+    </h1>
+
     <p>
-        Detect manipulated images and videos using Artificial
-        Intelligence. Upload your media and connect it to our
-        trained AI detection model for analysis.
+        Welcome to DeepShield AI, an AI-based DeepFake Detection
+        project designed to examine digital images and videos
+        and help identify potentially manipulated media.
     </p>
+
+    <a href="#detect" class="btn btn-primary">
+        Start Detection →
+    </a>
 </section>
 
-<section id="detect">
-    <div class="upload-box">
-        <div class="upload-icon">🔍</div>
-        <h2>Upload Image or Video</h2>
-        <p>Select an image or video from your device.</p>
+<main class="container">
 
-        <label for="mediaFile" class="upload-btn">
-            Choose File
-        </label>
+<!-- ABOUT DEEPFAKE -->
 
-        <input type="file" id="mediaFile"
-        accept="image/*,video/mp4,video/webm,video/quicktime">
+<section class="section" id="about">
 
-        <p id="fileName">No file selected</p>
-
-        <img id="preview" alt="Selected image preview">
-
-        <video id="videoPreview" controls
-        style="display:none;max-width:90%;max-height:250px;margin:20px auto;border-radius:10px;">
-        </video>
-
-        <br>
-
-        <button class="detect-btn" id="detectBtn">
-            Detect Deepfake
-        </button>
-
-        <p class="status" id="status">
-            AI model connection required for real detection.
+    <div class="section-heading">
+        <div class="tag">UNDERSTANDING DEEPFAKES</div>
+        <h2>About <span>Deepfake Detection</span></h2>
+        <p>
+            Learn about deepfakes, artificial intelligence
+            and the importance of digital media verification.
         </p>
     </div>
 
-    <div class="result-box" id="resultBox">
-        <h2>Detection Result</h2>
-        <div id="resultText"></div>
-        <p id="resultDetails"></p>
+    <div class="about-grid">
+
+        <div class="card">
+            <div class="card-icon">🧠</div>
+            <h3>What is a Deepfake?</h3>
+            <p>
+                A deepfake is digitally manipulated or AI-generated
+                media that can make a person appear to say or do
+                something they never actually did.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">🔍</div>
+            <h3>What is Deepfake Detection?</h3>
+            <p>
+                Deepfake detection uses artificial intelligence
+                and machine learning techniques to examine media
+                and identify possible signs of manipulation.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">🛡️</div>
+            <h3>Why is it Important?</h3>
+            <p>
+                It helps raise awareness about misinformation,
+                identity misuse, manipulated content and the
+                importance of digital authenticity.
+            </p>
+        </div>
+
     </div>
 </section>
 
-<section class="info" id="about">
-    <h2>About Deepfake Detection</h2>
-    <div class="cards">
-        <div class="card">
-            <h3>What is Deepfake?</h3>
-            <p>
-                Deepfake is AI-generated or manipulated
-                image, audio or video content that can
-                make someone appear to say or do things
-                they did not.
-            </p>
+<!-- DETECTION STUDIO -->
+
+<section class="section" id="detect">
+
+    <div class="section-heading">
+        <div class="tag">AI MEDIA ANALYSIS</div>
+        <h2>Deepfake <span>Detection Studio</span></h2>
+        <p>
+            Upload an image or video to send it to the backend
+            for processing.
+        </p>
+    </div>
+
+    <div class="upload-panel">
+
+        <div class="dropzone" id="dropzone">
+            <div class="upload-icon">⇧</div>
+            <h3>Drag & Drop Your Media</h3>
+            <p>Upload JPG, PNG, MP4 or WEBM files</p>
+            <span class="browse">Browse Files</span>
+
+            <input type="file" id="fileInput"
+                accept="image/jpeg,image/png,video/mp4,video/webm">
         </div>
 
-        <div class="card">
-            <h3>How It Works</h3>
-            <p>
-                An AI model analyzes the uploaded media
-                and identifies patterns that may indicate
-                manipulation.
-            </p>
+        <div class="preview-area" id="previewArea">
+            <img id="imagePreview" alt="Image preview">
+            <video id="videoPreview" controls></video>
+            <div class="file-name" id="fileName"></div>
         </div>
 
-        <div class="card">
-            <h3>Why Detection?</h3>
-            <p>
-                It helps people evaluate digital content
-                and improves awareness about manipulated
-                media and misinformation.
-            </p>
+        <div class="actions">
+            <button class="btn btn-primary" id="analyzeBtn" disabled>
+                ✦ Analyze Media
+            </button>
+
+            <button class="btn btn-secondary" id="clearBtn">
+                Clear File
+            </button>
+        </div>
+
+        <div class="status" id="status"></div>
+        <div class="scan-line" id="scanLine"></div>
+
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+
+<section class="section" id="working">
+
+    <div class="section-heading">
+        <div class="tag">PROJECT WORKFLOW</div>
+        <h2>How Does It <span>Work?</span></h2>
+        <p>Four stages of our proposed deepfake detection system.</p>
+    </div>
+
+    <div class="steps-box">
+        <div class="steps">
+
+            <div class="step">
+                <div class="step-number">01</div>
+                <h3>Upload Media</h3>
+                <p>Select an image or video from your device.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">02</div>
+                <h3>Media Processing</h3>
+                <p>The backend receives and prepares the uploaded file.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">03</div>
+                <h3>AI Analysis</h3>
+                <p>A trained AI model examines the media for possible manipulation.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">04</div>
+                <h3>Detection Result</h3>
+                <p>The model's prediction and confidence score are displayed.</p>
+            </div>
+
         </div>
     </div>
 </section>
 
-<footer id="contact">
-    <p>DeepFake AI Detection Project | B.Tech College Project</p>
-    <p>Powered by Artificial Intelligence and Machine Learning</p>
+<!-- FEATURES -->
+
+<section class="section" id="features">
+
+    <div class="section-heading">
+        <h2>Project <span>Features</span></h2>
+        <p>Key features planned for DeepShield AI.</p>
+    </div>
+
+    <div class="about-grid">
+
+        <div class="card">
+            <div class="card-icon">🖼️</div>
+            <h3>Image Analysis</h3>
+            <p>Upload images for analysis by the connected detection model.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">🎬</div>
+            <h3>Video Analysis</h3>
+            <p>Prepare video frames for AI-based examination.</p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">📊</div>
+            <h3>Detection Report</h3>
+            <p>Display model predictions and confidence information when available.</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- OBJECTIVES -->
+
+<section class="section" id="objectives">
+
+    <div class="section-heading">
+        <h2>Our Project <span>Objectives</span></h2>
+        <p>What we aim to achieve through this project.</p>
+    </div>
+
+    <div class="objectives">
+        <div class="objective"><span>✓</span> Identify potentially manipulated media</div>
+        <div class="objective"><span>✓</span> Explore AI and machine learning</div>
+        <div class="objective"><span>✓</span> Promote digital awareness</div>
+        <div class="objective"><span>✓</span> Support media authenticity checks</div>
+    </div>
+</section>
+
+<!-- HISTORY -->
+
+<section class="section" id="history">
+
+    <div class="section-heading">
+        <h2>Recent <span>Activity</span></h2>
+        <p>Recent upload attempts stored in this browser.</p>
+    </div>
+
+    <div id="historyList"></div>
+
+    <div class="actions">
+        <button class="btn btn-secondary" id="clearHistoryBtn">
+            Clear History
+        </button>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    © 2026 DeepShield AI | AI-Based DeepFake Detection Project
+    <br>
+    Building awareness for a safer digital world.
+    <br>
+    Note: Actual detection requires a connected and trained AI model.
 </footer>
 
 <script>
-const fileInput = document.getElementById("mediaFile");
-const fileName = document.getElementById("fileName");
-const preview = document.getElementById("preview");
+const fileInput = document.getElementById("fileInput");
+const dropzone = document.getElementById("dropzone");
+const imagePreview = document.getElementById("imagePreview");
 const videoPreview = document.getElementById("videoPreview");
-const detectBtn = document.getElementById("detectBtn");
-const resultBox = document.getElementById("resultBox");
-const resultText = document.getElementById("resultText");
-const resultDetails = document.getElementById("resultDetails");
-const statusText = document.getElementById("status");
+const previewArea = document.getElementById("previewArea");
+const fileName = document.getElementById("fileName");
+const analyzeBtn = document.getElementById("analyzeBtn");
+const statusBox = document.getElementById("status");
+const scanLine = document.getElementById("scanLine");
 
 let selectedFile = null;
 let previewURL = null;
 
-fileInput.addEventListener("change", function() {
-    selectedFile = this.files[0];
+function showStatus(message) {
+    statusBox.style.display = "block";
+    statusBox.textContent = message;
+}
 
-    resultBox.style.display = "none";
-    preview.style.display = "none";
-    videoPreview.style.display = "none";
+function chooseFile(file) {
+    if (!file) return;
+
+    const allowedTypes = [
+        "image/jpeg",
+        "image/png",
+        "video/mp4",
+        "video/webm"
+    ];
+
+    if (!allowedTypes.includes(file.type)) {
+        showStatus("Please select JPG, PNG, MP4 or WEBM.");
+        return;
+    }
+
+    if (file.size > 50 * 1024 * 1024) {
+        showStatus("File size must be below 50 MB.");
+        return;
+    }
+
+    selectedFile = file;
 
     if (previewURL) URL.revokeObjectURL(previewURL);
+    previewURL = URL.createObjectURL(file);
 
-    if (!selectedFile) {
-        fileName.textContent = "No file selected";
-        return;
-    }
+    imagePreview.style.display = "none";
+    videoPreview.style.display = "none";
 
-    const allowed = selectedFile.type.startsWith("image/") ||
-                    selectedFile.type.startsWith("video/");
-
-    if (!allowed) {
-        alert("Please select a valid image or video.");
-        this.value = "";
-        selectedFile = null;
-        fileName.textContent = "No file selected";
-        return;
-    }
-
-    fileName.textContent = "Selected: " + selectedFile.name;
-    previewURL = URL.createObjectURL(selectedFile);
-
-    if (selectedFile.type.startsWith("image/")) {
-        preview.src = previewURL;
-        preview.style.display = "block";
+    if (file.type.startsWith("image/")) {
+        imagePreview.src = previewURL;
+        imagePreview.style.display = "inline-block";
     } else {
         videoPreview.src = previewURL;
-        videoPreview.style.display = "block";
+        videoPreview.style.display = "inline-block";
     }
 
-    statusText.textContent = "File selected. Ready for analysis.";
+    previewArea.style.display = "block";
+
+    fileName.textContent =
+        file.name + " | " +
+        (file.size / (1024 * 1024)).toFixed(2) + " MB";
+
+    analyzeBtn.disabled = false;
+    showStatus("File selected successfully. Ready to upload.");
+}
+
+dropzone.addEventListener("click", () => fileInput.click());
+
+fileInput.addEventListener("change", () => {
+    chooseFile(fileInput.files[0]);
 });
 
-detectBtn.addEventListener("click", async function() {
+["dragenter", "dragover"].forEach(event => {
+    dropzone.addEventListener(event, e => {
+        e.preventDefault();
+        dropzone.classList.add("dragover");
+    });
+});
+
+["dragleave", "drop"].forEach(event => {
+    dropzone.addEventListener(event, e => {
+        e.preventDefault();
+        dropzone.classList.remove("dragover");
+    });
+});
+
+dropzone.addEventListener("drop", e => {
+    chooseFile(e.dataTransfer.files[0]);
+});
+
+async function analyzeMedia() {
     if (!selectedFile) {
-        alert("Please upload an image or video first.");
+        showStatus("Please select a file first.");
         return;
     }
 
-    detectBtn.disabled = true;
-    detectBtn.textContent = "Analyzing...";
-    statusText.textContent = "Sending media to AI backend...";
-
     const formData = new FormData();
-    formData.append("file", selectedFile);
+    formData.append("media", selectedFile);
+
+    analyzeBtn.disabled = true;
+    scanLine.style.display = "block";
+    showStatus("Uploading media to backend...");
 
     try {
-        const response = await fetch("/predict", {
+        const response = await fetch("/api/detect", {
             method: "POST",
             body: formData
         });
 
-        const data = await response.json();
+        const result = await response.json();
 
         if (!response.ok) {
-            throw new Error(data.error || "Detection failed.");
+            throw new Error(result.message || "Upload failed.");
         }
 
-        resultBox.style.display = "block";
-        resultText.textContent = data.prediction;
-        resultDetails.textContent =
-            "Confidence: " + data.confidence + "% | " +
-            (data.message || "AI analysis completed.");
+        showStatus(result.message || "Upload completed.");
 
-        statusText.textContent = "Analysis completed.";
+        addHistory(selectedFile.name);
 
     } catch (error) {
-        resultBox.style.display = "block";
-        resultText.textContent = "Detection unavailable";
-        resultDetails.textContent = error.message;
-        statusText.textContent =
-            "Please check that the Python backend and trained model are running.";
+        showStatus("Backend error: " + error.message);
     } finally {
-        detectBtn.disabled = false;
-        detectBtn.textContent = "Detect Deepfake";
+        analyzeBtn.disabled = !selectedFile;
+        scanLine.style.display = "none";
     }
-});
+}
+
+function clearFile() {
+    selectedFile = null;
+    fileInput.value = "";
+
+    if (previewURL) URL.revokeObjectURL(previewURL);
+    previewURL = null;
+
+    imagePreview.removeAttribute("src");
+    videoPreview.pause();
+    videoPreview.removeAttribute("src");
+    videoPreview.load();
+
+    previewArea.style.display = "none";
+    analyzeBtn.disabled = true;
+
+    showStatus("Select an image or video to begin.");
+}
+
+function addHistory(name) {
+    let history = JSON.parse(
+        localStorage.getItem("deepShieldHistory") || "[]"
+    );
+
+    history.unshift({
+        name,
+        date: new Date().toLocaleString()
+    });
+
+    history = history.slice(0, 10);
+
+    localStorage.setItem(
+        "deepShieldHistory",
+        JSON.stringify(history)
+    );
+
+    displayHistory();
+}
+
+function displayHistory() {
+    const history = JSON.parse(
+        localStorage.getItem("deepShieldHistory") || "[]"
+    );
+
+    const list = document.getElementById("historyList");
+    list.innerHTML = "";
+
+    if (!history.length) {
+        list.innerHTML =
+            '<div class="history-empty">No upload activity yet.</div>';
+        return;
+    }
+
+    history.forEach(item => {
+        const row = document.createElement("div");
+        row.className = "history-item";
+
+        const name = document.createElement("span");
+        name.textContent = "📄 " + item.name;
+
+        const date = document.createElement("span");
+        date.textContent = item.date;
+
+        row.append(name, date);
+        list.appendChild(row);
+    });
+}
+
+document.getElementById("clearBtn")
+    .addEventListener("click", clearFile);
+
+document.getElementById("clearHistoryBtn")
+    .addEventListener("click", () => {
+        localStorage.removeItem("deepShieldHistory");
+        displayHistory();
+    });
+
+analyzeBtn.addEventListener("click", analyzeMedia);
+
+displayHistory();
+showStatus("Select an image or video to begin.");
 </script>
 
 </body>
