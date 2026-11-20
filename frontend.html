@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,6 +42,7 @@ header {
     display:flex;
     align-items:center;
     justify-content:space-between;
+    gap:16px;
 }
 
 .logo {
@@ -52,10 +52,18 @@ header {
 
 .logo span {color:var(--cyan);}
 
+.header-right {
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
 nav {
     display:flex;
     flex-wrap:wrap;
     gap:20px;
+    align-items:center;
 }
 
 nav a {
@@ -66,6 +74,31 @@ nav a {
 }
 
 nav a:hover {color:var(--cyan);}
+
+.auth-actions {
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.btn-nav {
+    padding:9px 16px;
+    border-radius:8px;
+    font-size:12px;
+}
+
+.user-badge {
+    display:none;
+    align-items:center;
+    gap:8px;
+    padding:7px 12px;
+    border-radius:8px;
+    background:rgba(53,217,255,.1);
+    border:1px solid rgba(53,217,255,.28);
+    color:var(--cyan);
+    font-size:11px;
+    font-weight:600;
+}
 
 .hero {
     text-align:center;
@@ -114,6 +147,7 @@ nav a:hover {color:var(--cyan);}
     font-size:12px;
     font-weight:700;
     transition:.2s;
+    text-decoration:none;
 }
 
 .btn-primary {
@@ -125,6 +159,19 @@ nav a:hover {color:var(--cyan);}
     background:#25334b;
     color:white;
     border:1px solid var(--border);
+}
+
+.btn-link {
+    background:transparent;
+    color:var(--cyan);
+    padding:0;
+    font-size:12px;
+    font-weight:600;
+}
+
+.btn-link:hover {
+    text-decoration:underline;
+    transform:none;
 }
 
 .btn:hover {transform:translateY(-3px);}
@@ -385,6 +432,152 @@ nav a:hover {color:var(--cyan);}
     font-size:12px;
 }
 
+/* AUTHENTICATION MODAL (authen.html integration) */
+.auth-modal {
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:200;
+    background:rgba(4,8,16,.78);
+    backdrop-filter:blur(6px);
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.auth-modal.open {
+    display:flex;
+}
+
+.auth-card {
+    position:relative;
+    width:100%;
+    max-width:430px;
+    background:linear-gradient(155deg,#152440,#0f192d);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:30px 26px;
+    box-shadow:0 24px 60px rgba(0,0,0,.55);
+}
+
+.auth-close {
+    position:absolute;
+    top:16px;
+    right:16px;
+    width:32px;
+    height:32px;
+    border-radius:8px;
+    border:1px solid var(--border);
+    background:#1c2c49;
+    color:var(--text);
+    font-size:16px;
+    cursor:pointer;
+}
+
+.auth-close:hover {
+    border-color:var(--cyan);
+    color:var(--cyan);
+}
+
+.auth-header {
+    text-align:center;
+    margin-bottom:22px;
+}
+
+.auth-header h2 {
+    font-size:22px;
+    margin-bottom:6px;
+}
+
+.auth-header p {
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.6;
+}
+
+.auth-tabs {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    background:#0c1424;
+    padding:5px;
+    border-radius:10px;
+    margin-bottom:20px;
+    border:1px solid var(--border);
+}
+
+.auth-tab {
+    padding:9px;
+    border:0;
+    border-radius:7px;
+    background:transparent;
+    color:var(--muted);
+    font-size:12px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.auth-tab.active {
+    background:#1e3050;
+    color:var(--cyan);
+}
+
+.form-group {
+    margin-bottom:15px;
+}
+
+.form-group label {
+    display:block;
+    font-size:12px;
+    font-weight:600;
+    color:var(--text);
+    margin-bottom:7px;
+}
+
+.form-group input {
+    width:100%;
+    padding:12px 14px;
+    border-radius:9px;
+    border:1px solid var(--border);
+    background:#0b1322;
+    color:var(--text);
+    font-size:13px;
+    outline:none;
+}
+
+.form-group input:focus {
+    border-color:var(--cyan);
+}
+
+.form-row-between {
+    display:flex;
+    justify-content:flex-end;
+    margin-bottom:18px;
+}
+
+.auth-submit {
+    width:100%;
+    text-align:center;
+}
+
+.auth-feedback {
+    display:none;
+    margin-top:15px;
+    padding:12px;
+    border-radius:9px;
+    font-size:12px;
+    line-height:1.6;
+    background:rgba(53,217,255,.09);
+    border:1px solid rgba(53,217,255,.28);
+    color:var(--text);
+}
+
+.auth-feedback.error {
+    background:rgba(255,82,119,.12);
+    border-color:rgba(255,82,119,.35);
+    color:#ff9cb0;
+}
+
 footer {
     text-align:center;
     padding:30px 15px;
@@ -394,10 +587,13 @@ footer {
     line-height:2;
 }
 
-@media(max-width:750px) {
+@media(max-width:850px) {
     header {
         flex-direction:column;
         gap:15px;
+    }
+    .header-right {
+        justify-content:center;
     }
     nav {justify-content:center;}
     .about-grid {grid-template-columns:1fr;}
@@ -407,6 +603,7 @@ footer {
 @media(max-width:450px) {
     .steps,.objectives {grid-template-columns:1fr;}
     .upload-panel {padding:15px;}
+    .auth-card {padding:24px 18px;}
 }
 </style>
 </head>
@@ -416,13 +613,25 @@ footer {
 <header>
     <div class="logo">◈ DeepShield <span>AI</span></div>
 
-    <nav>
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#detect">Detection</a>
-        <a href="#working">How It Works</a>
-        <a href="#objectives">Objectives</a>
-    </nav>
+    <div class="header-right">
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#detect">Detection</a>
+            <a href="#working">How It Works</a>
+            <a href="#objectives">Objectives</a>
+        </nav>
+
+        <div class="auth-actions">
+            <span class="user-badge" id="userBadge"></span>
+            <button type="button" class="btn btn-primary btn-nav" id="openSignInBtn">
+                Sign In
+            </button>
+            <button type="button" class="btn btn-secondary btn-nav" id="signOutBtn" style="display:none;">
+                Sign Out
+            </button>
+        </div>
+    </div>
 </header>
 
 <!-- HOME -->
@@ -653,6 +862,67 @@ footer {
 
 </main>
 
+<!-- AUTHENTICATION SECTION / MODAL (authen.html) -->
+<div class="auth-modal" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <div class="auth-card">
+        <button type="button" class="auth-close" id="closeAuthBtn" aria-label="Close authentication modal">&times;</button>
+
+        <div class="auth-header">
+            <div class="tag">DEEPSHIELD ACCOUNT</div>
+            <h2 id="authTitle">Sign In to DeepShield AI</h2>
+            <p id="authSubtitle">Access your account and media verification history.</p>
+        </div>
+
+        <div class="auth-tabs" id="authTabs">
+            <button type="button" class="auth-tab active" id="tabSignIn">Sign In</button>
+            <button type="button" class="auth-tab" id="tabSignUp">Create Account</button>
+        </div>
+
+        <!-- Sign In / Sign Up Form -->
+        <form id="authForm">
+            <div class="form-group">
+                <label for="authEmail">Email Address</label>
+                <input type="email" id="authEmail" placeholder="you@example.com" required autocomplete="email">
+            </div>
+
+            <div class="form-group" id="passwordGroup">
+                <label for="authPassword">Password</label>
+                <input type="password" id="authPassword" placeholder="Enter your password" required autocomplete="current-password">
+            </div>
+
+            <div class="form-row-between" id="forgotRow">
+                <button type="button" class="btn btn-link" id="forgotPasswordBtn">
+                    Forgot Password?
+                </button>
+            </div>
+
+            <button type="submit" class="btn btn-primary auth-submit" id="authSubmitBtn">
+                Sign In
+            </button>
+        </form>
+
+        <!-- Forgot Password Reset Form -->
+        <form id="forgotForm" style="display:none;">
+            <div class="form-group">
+                <label for="resetEmail">Account Email Address</label>
+                <input type="email" id="resetEmail" placeholder="Enter email to reset password" required autocomplete="email">
+            </div>
+
+            <button type="submit" class="btn btn-primary auth-submit" id="resetSubmitBtn">
+                Send Reset Link
+            </button>
+
+            <div class="actions" style="margin-top:14px;">
+                <button type="button" class="btn btn-link" id="backToSignInBtn">
+                    ← Back to Sign In
+                </button>
+            </div>
+        </form>
+
+        <div class="auth-feedback" id="authFeedback"></div>
+    </div>
+</div>
+
 <footer>
     © 2026 DeepShield AI | AI-Based DeepFake Detection Project
     <br>
@@ -865,6 +1135,167 @@ document.getElementById("clearHistoryBtn")
 
 analyzeBtn.addEventListener("click", analyzeMedia);
 
+/* AUTHENTICATION LOGIC (Sign In, Sign Up, Forgot Password) */
+const authModal = document.getElementById("authModal");
+const openSignInBtn = document.getElementById("openSignInBtn");
+const signOutBtn = document.getElementById("signOutBtn");
+const userBadge = document.getElementById("userBadge");
+const closeAuthBtn = document.getElementById("closeAuthBtn");
+const tabSignIn = document.getElementById("tabSignIn");
+const tabSignUp = document.getElementById("tabSignUp");
+const authTabs = document.getElementById("authTabs");
+const authForm = document.getElementById("authForm");
+const forgotForm = document.getElementById("forgotForm");
+const forgotPasswordBtn = document.getElementById("forgotPasswordBtn");
+const backToSignInBtn = document.getElementById("backToSignInBtn");
+const forgotRow = document.getElementById("forgotRow");
+const authTitle = document.getElementById("authTitle");
+const authSubtitle = document.getElementById("authSubtitle");
+const authSubmitBtn = document.getElementById("authSubmitBtn");
+const authFeedback = document.getElementById("authFeedback");
+
+let authMode = "signin"; // "signin" | "signup"
+
+function showAuthFeedback(msg, isError = false) {
+    authFeedback.style.display = "block";
+    authFeedback.textContent = msg;
+    authFeedback.classList.toggle("error", isError);
+}
+
+function clearAuthFeedback() {
+    authFeedback.style.display = "none";
+    authFeedback.textContent = "";
+    authFeedback.classList.remove("error");
+}
+
+function setAuthMode(mode) {
+    authMode = mode;
+    clearAuthFeedback();
+    forgotForm.style.display = "none";
+    authForm.style.display = "block";
+    authTabs.style.display = "grid";
+
+    if (mode === "signin") {
+        tabSignIn.classList.add("active");
+        tabSignUp.classList.remove("active");
+        authTitle.textContent = "Sign In to DeepShield AI";
+        authSubtitle.textContent = "Enter your credentials to access your account.";
+        authSubmitBtn.textContent = "Sign In";
+        forgotRow.style.display = "flex";
+        document.getElementById("authPassword").setAttribute("autocomplete", "current-password");
+    } else {
+        tabSignUp.classList.add("active");
+        tabSignIn.classList.remove("active");
+        authTitle.textContent = "Create Your Account";
+        authSubtitle.textContent = "Register to save your detection activity.";
+        authSubmitBtn.textContent = "Sign Up";
+        forgotRow.style.display = "none";
+        document.getElementById("authPassword").setAttribute("autocomplete", "new-password");
+    }
+}
+
+function openForgotPasswordView() {
+    clearAuthFeedback();
+    authForm.style.display = "none";
+    authTabs.style.display = "none";
+    forgotForm.style.display = "block";
+    authTitle.textContent = "Reset Password";
+    authSubtitle.textContent = "We'll send a password reset link to your email.";
+    const currentEmail = document.getElementById("authEmail").value.trim();
+    if (currentEmail) {
+        document.getElementById("resetEmail").value = currentEmail;
+    }
+}
+
+function openAuthModal(mode = "signin") {
+    authModal.classList.add("open");
+    setAuthMode(mode);
+}
+
+function closeAuthModal() {
+    authModal.classList.remove("open");
+    clearAuthFeedback();
+}
+
+function syncAuthUI() {
+    const currentUser = localStorage.getItem("deepShieldUser");
+    if (currentUser) {
+        userBadge.textContent = "● " + currentUser;
+        userBadge.style.display = "inline-flex";
+        openSignInBtn.style.display = "none";
+        signOutBtn.style.display = "inline-block";
+    } else {
+        userBadge.style.display = "none";
+        openSignInBtn.style.display = "inline-block";
+        signOutBtn.style.display = "none";
+    }
+}
+
+openSignInBtn.addEventListener("click", () => openAuthModal("signin"));
+closeAuthBtn.addEventListener("click", closeAuthModal);
+tabSignIn.addEventListener("click", () => setAuthMode("signin"));
+tabSignUp.addEventListener("click", () => setAuthMode("signup"));
+forgotPasswordBtn.addEventListener("click", openForgotPasswordView);
+backToSignInBtn.addEventListener("click", () => setAuthMode("signin"));
+
+authModal.addEventListener("click", e => {
+    if (e.target === authModal) closeAuthModal();
+});
+
+signOutBtn.addEventListener("click", () => {
+    localStorage.removeItem("deepShieldUser");
+    syncAuthUI();
+    showStatus("You have signed out.");
+});
+
+authForm.addEventListener("submit", async e => {
+    e.preventDefault();
+    clearAuthFeedback();
+
+    const email = document.getElementById("authEmail").value.trim();
+    const password = document.getElementById("authPassword").value;
+
+    if (!email || !password) {
+        showAuthFeedback("Please fill in both email and password.", true);
+        return;
+    }
+
+    if (password.length < 6) {
+        showAuthFeedback("Password must be at least 6 characters.", true);
+        return;
+    }
+
+    // Hook this up to Firebase Auth / your backend auth endpoint as needed
+    localStorage.setItem("deepShieldUser", email);
+    syncAuthUI();
+    showAuthFeedback(
+        authMode === "signin"
+            ? `Signed in as ${email}.`
+            : `Account created for ${email}.`
+    );
+
+    setTimeout(() => {
+        closeAuthModal();
+        authForm.reset();
+    }, 900);
+});
+
+forgotForm.addEventListener("submit", async e => {
+    e.preventDefault();
+    clearAuthFeedback();
+
+    const resetEmail = document.getElementById("resetEmail").value.trim();
+    if (!resetEmail) {
+        showAuthFeedback("Please enter your email address.", true);
+        return;
+    }
+
+    // Hook this up to Firebase sendPasswordResetEmail(auth, resetEmail) or your backend API
+    showAuthFeedback(`If an account exists for ${resetEmail}, a password reset link has been sent.`);
+    forgotForm.reset();
+});
+
+syncAuthUI();
 displayHistory();
 showStatus("Select an image or video to begin.");
 </script>
